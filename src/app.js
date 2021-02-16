@@ -1,17 +1,18 @@
-const express = require('express');
-const lib = require('pipedrive');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
+import express from 'express';
+import * as lib from 'pipedrive';
+import * as helmet from 'helmet';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 
 // Config DOTENV
 dotenv.config();
-
 // Middlewares Imports
 
 // Instance
 const app = express();
 
 // Middlewares Setup
+app.use(helmet());
 app.use(bodyParser.json());
 
 // Routes Setup
