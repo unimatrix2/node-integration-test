@@ -1,6 +1,6 @@
 import express from 'express';
 import * as lib from 'pipedrive';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 
@@ -10,7 +10,6 @@ dotenv.config();
 
 // Instance
 const app = express();
-
 // Middlewares Setup
 app.use(helmet());
 app.use(bodyParser.json());
