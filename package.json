@@ -10,6 +10,10 @@
     "build": "babel src --out-dir build --copy-files",
     "deleteBuild": "rm -rf build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unimatrix2/node-integration-test.git"
+  },
   "keywords": [
     "technical",
     "test",
