@@ -6,7 +6,9 @@ import axios from 'axios';
 
 // Config DOTENV
 dotenv.config();
-// Middlewares Imports
+// Imports
+
+import mongoConnection from './configs/db.config';
 
 // Instance
 const app = express();
@@ -22,6 +24,6 @@ app.use(bodyParser.json());
 // Error Handling Setup
 
 // Start Db Connection
-
+mongoConnection(process.env.MONGODB_URI);
 // Server Start
 app.listen(process.env.PORT, () => console.log(`Listening on PORT ${process.env.PORT}`));
