@@ -1,8 +1,8 @@
 import express from 'express';
-import * as lib from 'pipedrive';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import axios from 'axios';
 
 // Config DOTENV
 dotenv.config();
@@ -14,6 +14,9 @@ const app = express();
 app.use(helmet());
 app.use(bodyParser.json());
 
+/* axios.get(`${process.env.PIPEDRIVE_BASE_URL}/deals?status=won&api_token=${process.env.PIPEDRIVE_API_TOKEN}`)
+    .then(data => console.log(data.data.data)) */ // Test Request
+    
 // Routes Setup
 
 // Error Handling Setup
