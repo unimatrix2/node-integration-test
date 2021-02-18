@@ -13,3 +13,9 @@ export const pipedriveDaily = async () => {
     if (wonDeals === 0) { return wonDeals }
     else { return pipedriveToBling(pipedriveDateMapper(wonDeals)) }
 };
+
+export const pipeDriveMigration = async () => {
+    const wonDeals = await getPipedriveWon();
+    if (wonDeals === 0) { return wonDeals }
+    else { return pipedriveToBling(wonDeals) }
+}
