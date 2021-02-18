@@ -2,13 +2,13 @@ import express from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import axios from 'axios';
 
 // Config DOTENV
 dotenv.config();
 // Imports
 
 import mongoConnection from './configs/db.config';
+// import { integrator } from './services/integration.service'; import for testing
 
 // Instance
 const app = express();
