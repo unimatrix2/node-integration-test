@@ -1,18 +1,28 @@
 import AppError from '../errors/AppError';
-import { pipedriveDaily, getPipedriveWon } from '../repositories/pipedrive.repository';
+import { pipedriveDaily, pipeDriveMigration } from '../repositories/pipedrive.repository';
 import { postBling } from '../repositories/bling.repository';
 import { storeResumo, getLatestResumo } from '../repositories/db.repository';
 
 export const integrator = async () => {
     const pipeData = await pipedriveDaily();
-    await registrar(pipeData);
+    const stored = await registrar(pipeData);
     pipeData.map(elem => postBling(elem));
     Promise.all(pipeData);
+    return stored;
 }
 
 export const registrar = async data => {
     const yesterday = new Date().setDate(new Date().getDate() - 1);
     const latest = await getLatestResumo()
     if (latest && latest.ref_dia.getTime() > yesterday) { return 0 }
-    await storeResumo(data);
+    const stored = await storeResumo(data);
+    return stored;
+}
+
+export const migrator = async () => {
+    const pipeData = await pipeDriveMigration();
+    const returnData = JSON.parse(JSON.stringify(pipeData));
+    pipeData.map(elem => postBling(elem));
+    Promise.all(pipeData);
+    return returnData;
 }
