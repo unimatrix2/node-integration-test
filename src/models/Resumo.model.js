@@ -1,10 +1,8 @@
 import { Schema, model } from 'mongoose';
-import joi from 'joi';
-import AppError from '../errors/AppError';
 
 const resumoSchema = new Schema(
     {
-        pedidos: [{ type: Number }],
+        ref_dia: { type: Date, required: true },
         total_pedidos: { type: Number, required: true },
     }, { timestamps: true }
 );
