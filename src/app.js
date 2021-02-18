@@ -25,5 +25,5 @@ mongoConnection(process.env.MONGODB_URI);
 // Server Start
 app.listen(process.env.PORT, () => console.log(`Listening on PORT ${process.env.PORT}`));
 
-integrator() // runs once at startup
+setTimeout(() => integrator(), 10000) // runs once at startup
 setInterval(() => integrator(), 86400000); // runs every day
