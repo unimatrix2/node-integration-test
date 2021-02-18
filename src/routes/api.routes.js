@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { migrator, integrator } from '../services/integration.service';
+import { migrator, integrator, reporter } from '../services/integration.service';
 
 const router = Router();
 
@@ -20,8 +20,8 @@ router.get('/sync', async (req, res, nxt) => {
         success: true,
         synced: result,
         warning: 'Sync is manual only, to begin daily syncing use /auto and /auto?stop=true to stop routine'
-    })
-})
+    });
+});
 
 router.get('/auto', async (req, res) => {
     const { stop } = req.query;
@@ -30,17 +30,17 @@ router.get('/auto', async (req, res) => {
         res.json({
             success: true,
             warning: 'Sync stopped. Services won\'t sync and no daily reports will be filed'
-        })
+        });
     } else if (stop && typeof routine === 'boolean') {
         res.json({
             success: false,
             warning: 'No sync routine running so none stopped.'
-        })
+        });
     } else if (typeof routine !== 'boolean') {
         res.json({
             success: false,
             warning: 'Sync routine is already runnning.'
-        })
+        });
     } else if (typeof routine === 'boolean') {
         const result = await integrator();
         routine = setInterval(() => integrator(), 86400000);
@@ -49,7 +49,15 @@ router.get('/auto', async (req, res) => {
             synced: result,
             warning: 'Sync routine started, services will be synced and daily reports filed every 24 hours.'
         });
-    }
-})
+    };
+});
+
+router.get('/report', async (req, res) => {
+    const result = await reporter();
+    res.json({
+        success: true,
+        reports: result
+    });
+});
 
 export default router;
