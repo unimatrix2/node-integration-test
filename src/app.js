@@ -8,22 +8,25 @@ dotenv.config();
 // Imports
 
 import mongoConnection from './configs/db.config';
-import { integrator } from './services/integration.service'; // import for testing
+import apiRoutes from './routes/api.routes';
+import { handle404, handleError } from './middlewares/errorHandler';
 
 // Instance
 const app = express();
+
 // Middlewares Setup
 app.use(helmet());
 app.use(bodyParser.json());
     
 // Routes Setup
+app.use('/api', apiRoutes);
 
 // Error Handling Setup
+app.use(handleError);
+app.use(handle404);
 
 // Start Db Connection
 mongoConnection(process.env.MONGODB_URI);
+
 // Server Start
 app.listen(process.env.PORT, () => console.log(`Listening on PORT ${process.env.PORT}`));
-
-setTimeout(() => integrator(), 10000) // runs once at startup
-setInterval(() => integrator(), 86400000); // runs every day
