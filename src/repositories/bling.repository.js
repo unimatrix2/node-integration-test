@@ -2,6 +2,7 @@ import axios from 'axios';
 import json2xml from 'json2xml';
 import AppError from '../errors/AppError';
 import { dateToQueryFormat } from '../utils/dateConverter';
+import { validateBlingSchema } from '../models/Bling.model';
 
 export const getBlingDaily = async () => {
     const date = dateToQueryFormat();
@@ -13,7 +14,10 @@ export const getBlingDaily = async () => {
 };
 
 export const postBling = (obj) => {
-    axios.post(`${process.env.BLING_BASE_URL}${process.env.BLING_API_KEY}&xml=${json2xml(obj)}`)
-        .then(() => console.log('Sucess!'))
-        .catch(err => console.log(err.data))
+    const validated = validateBlingSchema(obj);
+    if (validated) {
+        axios.post(`${process.env.BLING_BASE_URL}${process.env.BLING_API_KEY}&xml=${json2xml(validated)}`)
+            .then(() => console.log('Sucess!'))
+            .catch(err => console.log(err.data))
+    }
 }
