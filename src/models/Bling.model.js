@@ -15,7 +15,8 @@ const blingSchemaValidation = {
                     codigo: joi.number()
                 }
             ]
-        }
+        },
+        data: joi.string().max(10)
     }
 };
 
